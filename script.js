@@ -134,7 +134,6 @@ var tram = function() {
         console.log(color);
         _this.toGreen(11000);
         var returnToPreviousColor = function() {
-          console.log("kaka2");
           clearTimeout(_this.timeoutId);
         if (color===2) {
             _this.toRed();
@@ -145,7 +144,6 @@ var tram = function() {
         };
         setTimeout(returnToPreviousColor, 10000);
     };
-    console.log("kaka");
     setTimeout(changeColorToGreen, 3000);
 
 };
