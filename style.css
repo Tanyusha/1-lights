@@ -1,0 +1,103 @@
+body {
+    overflow: hidden;
+}
+
+.content {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: url(img/back.png);
+    background-repeat:repeat-x;
+    background-size: auto 100%;
+}
+.tram {
+    position: absolute;
+    bottom: 0;
+    right:-100%;
+    width:100%;
+}
+.tram-animation {
+    -webkit-animation: going_tram 20s;
+    -webkit-animation-timing-function: linear;
+    -moz-animation: going_tram 20s;
+    -moz-animation-timing-function: linear;
+    -o-animation: going_tram 20s;
+    -o-animation-timing-function: linear;
+    -ms-animation: going_tram 20s;
+    -ms-animation-timing-function: linear;
+    animation: going_tram 20s;
+    animation-timing-function: linear;
+}
+
+.tram-pause-animation {
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    -ms-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+@-webkit-keyframes going_tram {
+    0%   { right:-100%;}
+    100% {  right:50%;}
+}
+@-moz-keyframes going_tram {
+    0%   { right:-100%;}
+    100% {  right:50%;}
+}
+@-o-keyframes going_tram {
+    0%   { right:-100%;}
+    100% {  right:50%;}
+}
+@-ms-keyframes going_tram {
+    0%   { right:-100%;}
+    100% {  right:50%;}
+}
+
+@keyframes going_tram {
+    0%   { right:-100%;}
+    100% {  right:50%;}
+}
+
+.btn {
+    cursor: pointer;
+    background-image: linear-gradient(to bottom,#428bca 0,#2d6ca2 100%);
+    background-repeat: repeat-x;
+    color: #fff;
+    background-color: #428bca;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.traffic-light {
+    position:absolute;
+    width: 34px;
+    height: 200px;
+    bottom: 2%;
+    right: 30%;
+
+}
+.traffic-light-green {
+    background: url(img/tl.png) -61px 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.traffic-light-yellow {
+    background: url(img/tl.png) -30px 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.traffic-light-red {
+    background: url(img/tl.png) 1px 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

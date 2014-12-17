@@ -56,21 +56,23 @@ function TrafficLight() {
     this.isStop = false;
     this.timeoutId;
     this.color;
-    this.timeoutGreen = 2000;
-    this.timeoutYellow = 2000;
-    this.timeoutRed = 2000;
+    this.timeoutGreen = 6000;
+    this.timeoutYellow = 6000;
+    this.timeoutRed = 6000;
 };
 
 TrafficLight.prototype.beginWork = function (timeout) {
-    if (!timeout){timeout =2000;}
+    if (!timeout) {
+        timeout = 2000;
+    }
     var _this = this;
     var print = function () {
         if (_this.count % 4 === 0) {
             _this.toGreen(_this.timeoutGreen);
-        } else if (_this.count % 4 === 1){
+        } else if (_this.count % 4 === 1) {
             _this.toYellow(_this.timeoutYellow);
         }
-        else if (_this.count % 4 === 2){
+        else if (_this.count % 4 === 2) {
             _this.toRed(_this.timeoutRed);
         }
         else {
@@ -93,54 +95,60 @@ TrafficLight.prototype.stop = function () {
     clearTimeout(_this.timeoutId);
 };
 
-TrafficLight.prototype.toGreen = function(timeout) {
+TrafficLight.prototype.toGreen = function (timeout) {
     clearTimeout(this.timeoutId);
-    this.color ='green';
+    this.color = 'green';
     console.log(this.color);
 //    console.log(this.count);
     this.count = 1;
     this.beginWork(timeout);
 };
-TrafficLight.prototype.toRed = function(timeout) {
+TrafficLight.prototype.toRed = function (timeout) {
     clearTimeout(this.timeoutId);
-    this.color ='red';
+    this.color = 'red';
     console.log(this.color);
 //    console.log(this.count);
     this.count = 3;
     this.beginWork(timeout);
 
 };
-TrafficLight.prototype.toYellow = function(timeout) {
+TrafficLight.prototype.toYellow = function (timeout) {
     clearTimeout(this.timeoutId);
-    this.color ='yellow';
+    this.color = 'yellow';
     console.log(this.color);
 //    console.log(this.count);
-    if (this.count===1){
+    if (this.count === 1) {
         this.count = 2;
-    } else {this.count=0;}
+    } else {
+        this.count = 0;
+    }
     this.beginWork(timeout);
 };
-TrafficLight.prototype.state = function() {
-   return this.color;};
+TrafficLight.prototype.state = function () {
+    return this.color;
+
+};
 
 var my = new TrafficLight();
 
 //Событие трамвай
-var tram = function() {
+var tram = function () {
     var _this = this;
-    var changeColorToGreen = function() {
-        var color = _this.count-1;
-        if (color===-1){color=3};
+    var changeColorToGreen = function () {
+        var color = _this.count - 1;
+        if (color === -1) {
+            color = 3
+        }
         console.log(color);
         _this.toGreen(11000);
-        var returnToPreviousColor = function() {
-          clearTimeout(_this.timeoutId);
-        if (color===2) {
-            _this.toRed();
-        }
-        else {
-            _this.toYellow();
-        }
+        var returnToPreviousColor = function () {
+            clearTimeout(_this.timeoutId);
+            if (color === 2) {
+                _this.toRed();
+            }
+            else {
+                _this.toYellow();
+            }
         };
         setTimeout(returnToPreviousColor, 10000);
     };
@@ -148,3 +156,67 @@ var tram = function() {
 
 };
 my.on('tram', tram);
+my.start();
+//запуск анимированного трамвая по нажатию на кнопку
+$(document).ready(function () {
+    $('.btn-tram-run').click(function () {
+            my.trigger('tram');
+            $('.btn-tram-run').css('display', 'none');
+            $('.tram').addClass("tram-animation");
+
+            var reloadTram = function(){
+                $('.tram').removeClass("tram-animation");
+                $('.btn-tram-run').css('display', 'block');
+            };
+
+//            var transitionEnd = transitionEndEventName();
+//            $('.tram').get(0).addEventListener(transitionEnd, reloadTram, false);
+
+            setTimeout(reloadTram, 20000);
+        }
+    )
+});
+
+//смена цветов на светофоре
+
+$(document).ready(function () {
+    var changeColor = function() {
+        if(my.color==='green')
+        {
+            $('.traffic-light').addClass("traffic-light-green");
+            $('.traffic-light').removeClass("traffic-light-yellow");
+            $('.traffic-light').removeClass("traffic-light-red");
+        }
+        else if (my.color==='yellow')
+        {
+            $('.traffic-light').addClass("traffic-light-yellow");
+            $('.traffic-light').removeClass("traffic-light-green");
+            $('.traffic-light').removeClass("traffic-light-red");
+        }
+        else {
+            $('.traffic-light').addClass("traffic-light-red");
+            $('.traffic-light').removeClass("traffic-light-yellow");
+            $('.traffic-light').removeClass("traffic-light-green");
+        }
+    }
+    setInterval(changeColor, 100);
+});
+//function transitionEndEventName () {
+//    var i,
+//        undefined,
+//        el = document.createElement('div'),
+//        transitions = {
+//            'transition':'transitionend',
+//            'OTransition':'otransitionend',  // oTransitionEnd in very old Opera
+//            'MozTransition':'transitionend',
+//            'WebkitTransition':'webkitTransitionEnd'
+//        };
+//
+//    for (i in transitions) {
+//        if (transitions.hasOwnProperty(i) && el.style[i] !== undefined) {
+//            return transitions[i];
+//        }
+//    }
+//
+//    //TODO: throw 'TransitionEnd event is not supported in this browser';
+//}
