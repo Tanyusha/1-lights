@@ -13,10 +13,13 @@ body {
 .tram {
     position: absolute;
     bottom: 0;
-    right:-100%;
+    /*right:-100%;*/
     width:100%;
+    display: none;
+
 }
 .tram-animation {
+    display: block;
     -webkit-animation: going_tram 20s;
     -webkit-animation-timing-function: linear;
     -moz-animation: going_tram 20s;
